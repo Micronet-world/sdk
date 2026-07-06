@@ -1,7 +1,7 @@
 import type { Component } from 'vue'
 import { h, defineComponent } from 'vue'
 import type { AppManifest, AppInstance, MnAppBundle, AppDefinition, AppStoreEntry, LoaderConfig } from './types'
-import type { ScreenId, NavIntent } from 'micronet-kernel'
+import type { ScreenId, NavIntent } from '@micronet/kernel'
 import { getKernel } from './kernel'
 import * as store from './store'
 

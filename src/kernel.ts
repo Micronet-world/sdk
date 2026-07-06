@@ -1,1 +1,1 @@
-export { getKernel, setKernel } from 'micronet-kernel'
+export { getKernel, setKernel } from '@micronet/kernel'

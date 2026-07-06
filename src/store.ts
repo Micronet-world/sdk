@@ -1,5 +1,5 @@
 import type { AppId, AppManifest, AppStoreEntry, AppStoreConfig, AppState } from './types'
-import { storage } from 'micronet-kernel'
+import { storage } from '@micronet/kernel'
 import { validateManifest } from './utils'
 
 const STORE_KEY = 'micronet-app-store'

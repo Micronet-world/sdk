@@ -1,7 +1,7 @@
 import type { Component, Plugin } from 'vue'
 import { ref } from 'vue'
 import type { AppManifest, AppDefinition, AppStorage, AppEvents, AppI18n, AppPermission } from './types'
-import { storage } from 'micronet-kernel'
+import { storage } from '@micronet/kernel'
 
 export function defineManifest(config: AppManifest): AppManifest {
   return {
