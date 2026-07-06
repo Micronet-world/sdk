@@ -1,0 +1,34 @@
+{
+  "name": "micronet-sdk",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "Micronet SDK — app development tools, loader, compiler, and CLI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Micronet-world/sdk.git"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "micronet-kernel": "^1.0.0"
+  }
+}
