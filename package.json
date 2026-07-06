@@ -22,6 +22,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "prebuild": "rm -rf dist",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
@@ -30,5 +31,8 @@
   },
   "dependencies": {
     "@micronet/kernel": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2"
   }
 }

@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish SDK to npm
 
 on:
   push:
@@ -12,12 +12,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: Micronet-world/micronet
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
       - run: npm ci
       - run: npm run build
-      - run: npm publish --access public
+      - run: npm run test
+
+      - name: Build kernel standalone
+        working-directory: kernel
+        run: npx tsc
+
+      - name: Pack kernel
+        working-directory: kernel
+        run: npm pack
+
+      - name: Install kernel into SDK
+        working-directory: sdk
+        run: npm install --no-save ../kernel/micronet-kernel-*.tgz
+
+      - name: Build SDK
+        working-directory: sdk
+        run: npx tsc
+
+      - name: Publish SDK
+        working-directory: sdk
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
