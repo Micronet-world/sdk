@@ -106,6 +106,8 @@ export interface LoaderConfig {
   sandbox?: boolean
   timeout?: number
   maxApps?: number
+  /** Resolves `require("mod")` calls inside a .mnapp bundle's code. */
+  requireResolver?: (mod: string) => unknown
 }
 
 export interface CompileOptions {

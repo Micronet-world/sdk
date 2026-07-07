@@ -102,7 +102,8 @@ export async function loadApp(manifest: AppManifest, component: Component): Prom
 
 export function loadAppFromString(bundleCode: string): AppInstance {
   const module = { exports: {} as Record<string, unknown> }
-  new Function('module', 'exports', 'require', bundleCode)(module, module.exports, () => ({}))
+  const resolver = loaderConfig.requireResolver || (() => ({}))
+  new Function('module', 'exports', 'require', bundleCode)(module, module.exports, resolver)
 
   const result = module.exports as { default?: AppDefinition; manifest?: AppManifest; component?: Component }
   const appDef = result.default || result
@@ -154,7 +155,22 @@ export async function loadAppFromUrl(url: string): Promise<AppInstance> {
 
 export function loadAppFromBundle(bundle: MnAppBundle): AppInstance {
   appBundles.set(bundle.manifest.id, bundle)
+  injectBundleAssets(bundle)
   return loadAppFromString(bundle.code)
+}
+
+function injectBundleAssets(bundle: MnAppBundle): void {
+  if (!bundle.assets) return
+  for (const [key, value] of Object.entries(bundle.assets)) {
+    if (key.endsWith('.css') && typeof document !== 'undefined') {
+      const existing = document.querySelector(`style[data-app="${bundle.manifest.id}"]`)
+      if (existing) continue
+      const style = document.createElement('style')
+      style.setAttribute('data-app', bundle.manifest.id)
+      style.textContent = value
+      document.head.appendChild(style)
+    }
+  }
 }
 
 export async function loadAppFromStore(entry: AppStoreEntry): Promise<AppInstance | null> {
@@ -270,4 +286,10 @@ export async function unloadAllApps(): Promise<void> {
 
 export function registerAppInstance(manifest: AppManifest, component: Component): AppInstance {
   return loadAppSync(manifest, component)
+}
+
+export function clearLoadedApps(): void {
+  loadedApps.clear()
+  appComponents.clear()
+  appBundles.clear()
 }
