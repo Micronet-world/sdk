@@ -11,7 +11,7 @@ const appBundles = new Map<string, MnAppBundle>()
 let loaderConfig: LoaderConfig = {}
 
 export function configureLoader(config: LoaderConfig): void {
-  loaderConfig = config
+  loaderConfig = { ...loaderConfig, ...config }
 }
 
 function createAppComponent(appDef: { manifest: AppManifest; component: Component }): Component {
