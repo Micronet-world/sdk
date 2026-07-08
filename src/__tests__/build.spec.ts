@@ -291,7 +291,7 @@ describe('.mnapp binary format', () => {
       const manifest = makeManifest('exec-test')
       const code = serializeComponent(manifest, '', 'function() { return null; }')
 
-      const module = { exports: {} as Record<string, unknown> }
+      const module = { exports: {} as Record<string, any> }
       new Function('module', 'exports', code)(module, module.exports)
 
       expect(module.exports.default).toBeDefined()

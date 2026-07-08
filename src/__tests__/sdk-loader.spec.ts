@@ -9,7 +9,6 @@ import {
   unloadAllApps,
   enableApp,
   disableApp,
-  getApp,
   getLoadedApps,
   getEnabledApps,
   isAppLoaded,
@@ -21,10 +20,7 @@ import {
   getLoaderConfig,
   registerAppInstance,
   clearLoadedApps,
-  buildBundle,
   serializeComponent,
-  encodeBundle,
-  decodeBundle,
 } from '../index'
 import { resetRegistry, resetBus, getRegisteredScreen } from '@micronet/kernel'
 import type { AppManifest, MnAppBundle } from '../types'
@@ -73,7 +69,7 @@ describe('SDK Loader', () => {
       const manifest = makeManifest('test-reg')
       await loadApp(manifest, makeComponent())
 
-      const reg = getRegisteredScreen('test-reg')
+      const reg = getRegisteredScreen('test-reg' as any)
       expect(reg).toBeDefined()
       expect(reg!.meta.label).toBe('App test-reg')
     })
@@ -140,7 +136,7 @@ describe('SDK Loader', () => {
       })
       await loadApp(manifest, makeComponent())
 
-      const reg = getRegisteredScreen('test-events')
+      const reg = getRegisteredScreen('test-events' as any)
       expect(reg!.events['go-back']).toEqual({ type: 'back' })
       expect(reg!.events['go-home']).toEqual({ type: 'home' })
       expect(reg!.events['go-lock']).toEqual({ type: 'lock' })
